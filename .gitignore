@@ -12,6 +12,8 @@ TestResults/
 coverage/
 *.coverage
 *.coveragexml
+Logs/
+**/Logs/
 
 appsettings.Local.json
 *.db

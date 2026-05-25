@@ -12,4 +12,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<MoodEntry> MoodEntries { get; set; }
 
     public DbSet<DoomscrollingReport> DoomscrollingReports { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<AppUser>()
+            .HasIndex(user => user.Email)
+            .IsUnique();
+    }
 }
