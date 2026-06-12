@@ -95,6 +95,32 @@ public class ScreenTimeController(IScreenTimeRepository screenTimeRepository, IM
         return Ok(mapper.Map<ScreenTimeEntryResponseDto>(entry));
     }
 
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update(Guid id, UpdateScreenTimeEntryDto request)
+    {
+        var userId = GetCurrentUserId();
+        if (userId is null)
+        {
+            return Unauthorized();
+        }
+
+        var entry = mapper.Map<ScreenTimeEntry>(request);
+        entry.Id = id;
+        entry.UserId = userId.Value;
+
+        var updated = await screenTimeRepository.UpdateAsync(entry);
+        if (!updated)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
+    }
+
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

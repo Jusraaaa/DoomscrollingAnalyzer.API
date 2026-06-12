@@ -66,6 +66,25 @@ public class ScreenTimeRepository(AppDbContext context) : IScreenTimeRepository
             .FirstOrDefaultAsync(entry => entry.Id == id && entry.UserId == userId);
     }
 
+    public async Task<bool> UpdateAsync(ScreenTimeEntry entry)
+    {
+        var existingEntry = await context.ScreenTimeEntries
+            .FirstOrDefaultAsync(screenTimeEntry => screenTimeEntry.Id == entry.Id && screenTimeEntry.UserId == entry.UserId);
+
+        if (existingEntry is null)
+        {
+            return false;
+        }
+
+        existingEntry.PlatformName = entry.PlatformName;
+        existingEntry.HoursSpent = entry.HoursSpent;
+        existingEntry.UsageDate = entry.UsageDate;
+
+        await context.SaveChangesAsync();
+
+        return true;
+    }
+
     public async Task<bool> DeleteAsync(Guid id, Guid userId)
     {
         var entry = await context.ScreenTimeEntries

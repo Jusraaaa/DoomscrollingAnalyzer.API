@@ -1,0 +1,9 @@
+services:
+  doomscrolling-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: doomscrolling-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Doomscrolling_DevPass123!"
+    ports:
+      - "1433:1433"

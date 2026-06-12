@@ -9,6 +9,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<CreateScreenTimeEntryDto, ScreenTimeEntry>();
+        CreateMap<UpdateScreenTimeEntryDto, ScreenTimeEntry>();
         CreateMap<ScreenTimeEntry, ScreenTimeEntryResponseDto>();
     }
 }

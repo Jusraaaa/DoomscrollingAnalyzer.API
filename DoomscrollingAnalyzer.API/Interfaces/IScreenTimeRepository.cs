@@ -18,5 +18,7 @@ public interface IScreenTimeRepository
 
     Task<ScreenTimeEntry?> GetByIdAsync(Guid id, Guid userId);
 
+    Task<bool> UpdateAsync(ScreenTimeEntry entry);
+
     Task<bool> DeleteAsync(Guid id, Guid userId);
 }
