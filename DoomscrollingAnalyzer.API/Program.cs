@@ -90,6 +90,12 @@ builder.Services.AddAutoMapper(_ => { }, typeof(Program).Assembly);
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IScreenTimeRepository, ScreenTimeRepository>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddHttpClient<IWellbeingTipService, WellbeingTipService>(client =>
+{
+    client.BaseAddress = new Uri("https://api.quotable.io");
+    client.Timeout = TimeSpan.FromSeconds(5);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("DoomscrollingAnalyzer/1.0");
+});
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
